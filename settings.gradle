@@ -1,0 +1,2 @@
+include ':TestAppJava', ':TestAppKotlin', ':Preference'
+rootProject.name='AndroidLib'

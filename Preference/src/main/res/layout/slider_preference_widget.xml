@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.UnPressableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@android:id/summary"
+    android:layout_alignStart="@android:id/title"
+    android:layout_alignLeft="@android:id/title"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/preference_seekbar_padding_horizontal"
+        android:paddingLeft="@dimen/preference_seekbar_padding_horizontal"
+        android:paddingEnd="22dp"
+        android:paddingRight="22dp"
+        android:focusable="false"
+        android:clickable="false"
+        android:background="@null" />
+
+    <TextView android:id="@+id/seekbar_value"
+        android:layout_width="@dimen/preference_seekbar_value_minWidth"
+        android:layout_height="match_parent"
+        android:gravity="right|center_vertical"
+        android:fontFamily="sans-serif-condensed"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"/>
+
+
+</androidx.preference.UnPressableLinearLayout>
