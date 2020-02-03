@@ -1,4 +1,4 @@
-package jp.westbrook.testappjava;
+package jp.westbrook.android.testappjava;
 
 import android.os.Bundle;
 

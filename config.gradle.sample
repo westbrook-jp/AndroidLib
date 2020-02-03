@@ -1,0 +1,52 @@
+// version and id
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// android project
+////////////////////////////////////////////////////////////////////////////////////////////////////
+allprojects { ext."configVersionName" = "1.0.0" }
+//allprojects { ext."configVersionName" = "1.0.0-SNAPSHOT" }
+allprojects { ext."configVersionCode" = 1 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Maven Pom
+////////////////////////////////////////////////////////////////////////////////////////////////////
+allprojects { ext."mavenPomGroupId" = "jp.westbrook.android" }
+allprojects { ext."mavenPomArtifactId" = "preference" }
+allprojects { ext."mavenPomName" = "Android Preference Library" }
+allprojects { ext."mavenPomDescription" = "Preference library extends the standard preference user interface" }
+allprojects { ext."mavenPomUrl" = "https://github.com/westbrook-jp/AndroidLib" }
+allprojects { ext."mavenPomPackaging" = "aar" }
+
+allprojects { ext."mavenPomScmUrl" = "https://github.com/westbrook-jp/AndroidLib" }
+allprojects { ext."mavenPomScmConnection" = "scm:git:@github.com:westbrook-jp/AndroidLib.git" }
+allprojects { ext."mavenPomScmDeveloperConnection" = "scm:git:@github.com:westbrook-jp/AndroidLib.git" }
+
+allprojects { ext."mavenPomLicenseName" = "The Apache License, Version 2.0" }
+allprojects { ext."mavenPomLicenseUrl" = "http://www.apache.org/licenses/LICENSE-2.0.txt" }
+allprojects { ext."mavenPomLicenseDistribution" = "repo" }
+
+allprojects { ext."mavenPomDeveloperId" = "example" }
+allprojects { ext."mavenPomDeveloperName" = "example user" }
+allprojects { ext."mavenPomDeveloperEmail" = "example@example.com" }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// signing
+////////////////////////////////////////////////////////////////////////////////////////////////////
+allprojects { ext."signing.secretKeyRingFile" = "secret.gpg" }
+allprojects { ext."signing.keyId" = "XXXXXXXX" }
+allprojects { ext."signing.password" = "XXXXXXXXXXX" }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Repository
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// local maven Repository
+//allprojects { ext."mavenSnapshotRepositoryUrl" = "http://localhost:8081/repository/local-maven-snapshot/" }
+//allprojects { ext."mavenReleaseRepositoryUrl" = "http://localhost:8081/repository/local-maven-releases/" }
+//allprojects { ext."mavenRepositoryUsername" = "XXXXXXXX" }
+//allprojects { ext."mavenRepositoryPassword" = "XXXXXXXXXXX" }
+
+// OSSRH Central maven Repository
+//allprojects { ext."mavenSnapshotRepositoryUrl" = "https://oss.sonatype.org/content/repositories/snapshots" }
+//allprojects { ext."mavenReleaseRepositoryUrl" = "https://oss.sonatype.org/service/local/staging/deploy/maven2" }
+//allprojects { ext."mavenRepositoryUsername" = "XXXXXXXX" }
+//allprojects { ext."mavenRepositoryPassword" = "XXXXXXXXXXX" }

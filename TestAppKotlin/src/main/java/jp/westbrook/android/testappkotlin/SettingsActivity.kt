@@ -1,4 +1,4 @@
-package jp.westbrook.testappkotlin
+package jp.westbrook.android.testappkotlin
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

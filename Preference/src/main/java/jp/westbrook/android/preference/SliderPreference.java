@@ -1,4 +1,4 @@
-package jp.westbrook.preference;
+package jp.westbrook.android.preference;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,13 +16,17 @@ import androidx.preference.SeekBarPreference;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Slider preference base template class
+ * @param <N> type
+ */
 public abstract class SliderPreference<N extends Number> extends Preference
 {
     protected enum LAYOUT_RESOURCE_MODE {
         SEEKBAR_LAYOUT_RESOURCE,
         LAYOUT_RESOURCE,
         WIDGET_LAYOUT_RESOURCE,
-    };
+    }
     // static
     protected static final LAYOUT_RESOURCE_MODE mLayoutResourceMode =  LAYOUT_RESOURCE_MODE.SEEKBAR_LAYOUT_RESOURCE;
     protected static int mSeekBarPreferenceResourceId = 0;
@@ -43,19 +47,45 @@ public abstract class SliderPreference<N extends Number> extends Preference
     protected BigDecimal mValue;
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // constructoers
+    // constructors
+
+    /**
+     * constructor
+     * @param context Context: The Context this is associated with, through which it can access the current theme, resources, SharedPreferences, etc.
+     */
     public SliderPreference(Context context) {
         super(context);
         initialize(context, null, 0, 0);
     }
+
+    /**
+     * constructor
+     * @param context Context: The Context this is associated with, through which it can access the current theme, resources, SharedPreferences, etc.
+     * @param attrs AttributeSet: The attributes of the XML tag that is inflating the preference
+     */
     public SliderPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(context, attrs, 0, 0);
     }
+
+    /**
+     * constructor
+     * @param context Context: The Context this is associated with, through which it can access the current theme, resources, SharedPreferences, etc.
+     * @param attrs AttributeSet: The attributes of the XML tag that is inflating the preference
+     * @param defStyleAttr int: An attribute in the current theme that contains a reference to a style resource that supplies default values for the view. Can be 0 to not look for defaults.
+     */
     public SliderPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize(context, attrs, defStyleAttr, 0);
     }
+
+    /**
+     * constructor
+     * @param context Context: The Context this is associated with, through which it can access the current theme, resources, SharedPreferences, etc.
+     * @param attrs AttributeSet: The attributes of the XML tag that is inflating the preference
+     * @param defStyleAttr int: An attribute in the current theme that contains a reference to a style resource that supplies default values for the view. Can be 0 to not look for defaults.
+     * @param defStyleRes int: A resource identifier of a style resource that supplies default values for the view, used only if defStyleAttr is 0 or can not be found in the theme. Can be 0 to not look for defaults.
+     */
     public SliderPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -63,7 +93,7 @@ public abstract class SliderPreference<N extends Number> extends Preference
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // impliments
+    // implements
     protected void initialize(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         switch (mLayoutResourceMode) {
             case LAYOUT_RESOURCE:
@@ -259,7 +289,7 @@ public abstract class SliderPreference<N extends Number> extends Preference
      */
     /**
      * Listener reacting to the user pressing DPAD left/right keys if {@code
-     * adjustable} attribute is set to true; it transfers the key presses to the {@link SeekBar}
+     * adjustable} attribute is set to true; it transfers the key presses to the SeekBar
      * to be handled accordingly.
      */
     private View.OnKeyListener mSeekBarKeyListener = new View.OnKeyListener() {
@@ -287,9 +317,9 @@ public abstract class SliderPreference<N extends Number> extends Preference
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // public interface
     /**
-     * Gets the current progress of the {@link SeekBar}.
+     * Gets the current progress of the SeekBar.
      *
-     * @return The current progress of the {@link SeekBar}
+     * @return The current progress of the SeekBar
      */
     public N getValue()
     {
@@ -297,16 +327,16 @@ public abstract class SliderPreference<N extends Number> extends Preference
     }
 
     /**
-     * Sets the current progress of the {@link SeekBar}.
+     * Sets the current progress of the SeekBar.
      *
-     * @param value The current progress of the {@link SeekBar}
+     * @param value The current progress of the SeekBar
      */
     public void setValue(N value)
     {
         setValueInternal(convertToValue(value), true);
     }
     /**
-     * Gets the lower bound set on the {@link SeekBar}.
+     * Gets the lower bound set on the SeekBar.
      *
      * @return The lower bound set
      */
@@ -316,7 +346,7 @@ public abstract class SliderPreference<N extends Number> extends Preference
     }
 
     /**
-     * Sets the lower bound on the {@link SeekBar}.
+     * Sets the lower bound on the SeekBar.
      *
      * @param min The lower bound to set
      */
@@ -333,7 +363,7 @@ public abstract class SliderPreference<N extends Number> extends Preference
     }
 
     /**
-     * Gets the upper bound set on the {@link SeekBar}.
+     * Gets the upper bound set on the SeekBar.
      *
      * @return The upper bound set
      */
@@ -341,7 +371,7 @@ public abstract class SliderPreference<N extends Number> extends Preference
         return convertFromValue(mMaximum);
     }
     /**
-     * Sets the upper bound on the {@link SeekBar}.
+     * Sets the upper bound on the SeekBar.
      *
      * @param max The upper bound to set
      */
@@ -357,9 +387,9 @@ public abstract class SliderPreference<N extends Number> extends Preference
     }
 
     /**
-     * Gets whether the current {@link SeekBar} value is displayed to the user.
+     * Gets whether the current SeekBar value is displayed to the user.
      *
-     * @return Whether the current {@link SeekBar} value is displayed to the user
+     * @return Whether the current SeekBar value is displayed to the user
      * @see #setShowValue(boolean)
      */
     public boolean getShowValue()
@@ -367,9 +397,9 @@ public abstract class SliderPreference<N extends Number> extends Preference
         return mShowValue;
     }
     /**
-     * Sets whether the current {@link SeekBar} value is displayed to the user.
+     * Sets whether the current SeekBar value is displayed to the user.
      *
-     * @param showValue Whether the current {@link SeekBar} value is displayed to the user
+     * @param showValue Whether the current SeekBar value is displayed to the user
      * @see #getShowValue()
      */
     public void setShowValue(boolean showValue) {
@@ -377,29 +407,29 @@ public abstract class SliderPreference<N extends Number> extends Preference
         notifyChanged();
     }
     /**
-     * Gets whether the {@link SeekBar} should respond to the left/right keys.
+     * Gets whether the SeekBar should respond to the left/right keys.
      *
-     * @return Whether the {@link SeekBar} should respond to the left/right keys
+     * @return Whether the SeekBar should respond to the left/right keys
      */
     public boolean isAdjustable()
     {
         return mAdjustable;
     }
     /**
-     * Sets whether the {@link SeekBar} should respond to the left/right keys.
+     * Sets whether the SeekBar should respond to the left/right keys.
      *
-     * @param adjustable Whether the {@link SeekBar} should respond to the left/right keys
+     * @param adjustable Whether the SeekBar should respond to the left/right keys
      */
     public void setAdjustable(boolean adjustable)
     {
         mAdjustable = adjustable;
     }
     /**
-     * Gets whether the {@link SliderPreference} should continuously save the {@link SeekBar} value
+     * Gets whether the {@link SliderPreference} should continuously save the SeekBar value
      * while it is being dragged. Note that when the value is true,
      * {@link Preference.OnPreferenceChangeListener} will be called continuously as well.
      *
-     * @return Whether the {@link SliderPreference} should continuously save the {@link SeekBar}
+     * @return Whether the {@link SliderPreference} should continuously save the SeekBar
      * value while it is being dragged
      * @see #setUpdatesContinuously(boolean)
      */
@@ -408,11 +438,11 @@ public abstract class SliderPreference<N extends Number> extends Preference
         return mUpdatesContinuously;
     }
     /**
-     * Sets whether the {@link SeekBarPreference} should continuously save the {@link SeekBar} value
+     * Sets whether the {@link SeekBarPreference} should continuously save the SeekBar value
      * while it is being dragged.
      *
      * @param updatesContinuously Whether the {@link SeekBarPreference} should continuously save
-     *                            the {@link SeekBar} value while it is being dragged
+     *                            the SeekBar value while it is being dragged
      * @see #getUpdatesContinuously()
      */
     public void setUpdatesContinuously(boolean updatesContinuously)

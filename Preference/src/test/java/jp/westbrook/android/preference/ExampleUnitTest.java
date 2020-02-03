@@ -1,4 +1,4 @@
-package jp.westbrook.preference;
+package jp.westbrook.android.preference;
 
 import org.junit.Test;
 

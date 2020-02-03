@@ -1,15 +1,23 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// apply config
+File configFile = rootProject.file("config.gradle")
+if (configFile.exists()) {
+    apply from: configFile.absolutePath
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0"
+        versionCode configVersionCode
+        versionName configVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -32,4 +40,126 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.preference:preference:1.1.0'
+}
+
+
+def isReleaseBuild() {
+    return configVersionName.contains("SNAPSHOT") == false
+}
+def mavenReleaseRepositoryUrl = hasProperty("mavenReleaseRepositoryUrl") ? mavenReleaseRepositoryUrl : "$buildDir/repos/releases"
+def mavenSnapshotRepositoryUrl = hasProperty("mavenSnapshotRepositoryUrl") ? mavenSnapshotRepositoryUrl : "$buildDir/repos/snapshots"
+def mavenRepositoryUsername = hasProperty("mavenRepositoryUsername") ? mavenRepositoryUsername : ""
+def mavenRepositoryPassword = hasProperty("mavenRepositoryPassword") ? mavenRepositoryPassword : ""
+
+task generateJavadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    //destinationDir = new File("$project.buildDir/javadoc/$variant.name")
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == "release") {
+            if (variant.hasProperty("javaCompileProvider")) {
+                // Android 3.3.0+
+                owner.classpath += variant.javaCompileProvider.get().classpath
+            } else {
+                owner.classpath += variant.javaCompile.classpath
+            }
+        }
+    }
+    options {
+        linksOffline("https://developer.android.com/reference", "${project.android.sdkDirectory}/docs/reference")
+        links("https://docs.oracle.com/javase/8/docs/api/")
+        // bootClasspath(file(androidJar))
+        setMemberLevel(JavadocMemberLevel.PUBLIC)
+        //setMemberLevel(JavadocMemberLevel.PACKAGE)
+        locale = "en_US"
+        encoding = "UTF-8"
+        charSet = "UTF-8"
+    }
+    exclude "**/BuildConfig.java", "**/R.java"
+    exclude "**/R.html", "**/R.*.html", "**/index.html"
+}
+
+task generateJavadocJar(type: Jar, dependsOn: generateJavadoc) {
+    classifier = "javadoc"
+    // destinationDir = new File("$project.buildDir/libs/")
+    // exclude "**/BuildConfig.class", "**/R.class"
+    from generateJavadoc.destinationDir
+}
+
+task generateSourcesJar(type: Jar) {
+    classifier = "sources"
+    // destinationDir = new File("$project.buildDir/libs/")
+    // exclude "**/BuildConfig.java", "**/R.java"
+    from android.sourceSets.main.java.sourceFiles
+}
+
+// publishing description
+afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = mavenPomGroupId
+                artifactId = mavenPomArtifactId
+                version = android.defaultConfig.versionName
+
+                //from components.
+                artifact bundleReleaseAar
+                artifact generateJavadocJar
+                artifact generateSourcesJar
+
+                pom {
+                    name = mavenPomName
+                    packaging = "aar"
+                    description = mavenPomDescription
+                    url = mavenPomUrl
+                    /*
+                    properties = [
+                            myProp: "value",
+                            "prop.with.dots": "anotherValue"
+                    ]
+                     */
+                    scm {
+                        url = mavenPomScmUrl
+                        connection = mavenPomScmConnection
+                        developerConnection = mavenPomScmDeveloperConnection
+                    }
+                    licenses {
+                        license {
+                            name = mavenPomLicenseName
+                            url = mavenPomLicenseUrl
+                            distribution = mavenPomLicenseDistribution
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = mavenPomDeveloperId
+                            name = mavenPomDeveloperName
+                            email = mavenPomDeveloperEmail
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                url = isReleaseBuild() ? mavenReleaseRepositoryUrl : mavenSnapshotRepositoryUrl
+
+                if (mavenRepositoryUsername != "") {
+                    credentials {
+                        username = mavenRepositoryUsername
+                        password = mavenRepositoryPassword
+                    }
+                }
+            }
+        }
+    }
+    signing {
+        //sign configurations.archives
+        sign publishing.publications.mavenJava
+    }
+    /*
+    artifacts {
+        archives generateJavadocJar, generateSourcesJar
+    }
+     */
 }
