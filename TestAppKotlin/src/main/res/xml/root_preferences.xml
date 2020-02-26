@@ -50,16 +50,26 @@
 
     <PreferenceCategory app:title="@string/slider_header">
 
-        <jp.westbrook.preference.IntegerSliderPreference
+        <jp.westbrook.android.preference.IntegerSliderPreference
             app:key="slider_integer"
             app:title="@string/slider_integer_title"
             />
 
-        <jp.westbrook.preference.FloatSliderPreference
+        <jp.westbrook.android.preference.FloatSliderPreference
             app:key="slider_float"
             app:title="@string/slider_float_title"
             app:adjustable="true"
             app:showValue="true"
+            />
+
+        <jp.westbrook.android.preference.FloatSliderPreference
+            app:key="slider_float2"
+            app:title="@string/slider_float_title"
+            app:adjustable="true"
+            app:showValue="true"
+            app:minimum="0.0"
+            app:maximum="3.0"
+            app:tick="0.01"
             />
 
     </PreferenceCategory>

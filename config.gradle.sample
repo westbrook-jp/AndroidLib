@@ -1,20 +1,14 @@
-// version and id
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // android project
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-allprojects { ext."configVersionName" = "1.0.0" }
-//allprojects { ext."configVersionName" = "1.0.0-SNAPSHOT" }
-allprojects { ext."configVersionCode" = 1 }
+allprojects { ext."configReleaseFlag" = false }
+//allprojects { ext."configReleaseFlag" = true }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Maven Pom
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 allprojects { ext."mavenPomGroupId" = "jp.westbrook.android" }
-allprojects { ext."mavenPomArtifactId" = "preference" }
-allprojects { ext."mavenPomName" = "Android Preference Library" }
-allprojects { ext."mavenPomDescription" = "Preference library extends the standard preference user interface" }
 allprojects { ext."mavenPomUrl" = "https://github.com/westbrook-jp/AndroidLib" }
-allprojects { ext."mavenPomPackaging" = "aar" }
 
 allprojects { ext."mavenPomScmUrl" = "https://github.com/westbrook-jp/AndroidLib" }
 allprojects { ext."mavenPomScmConnection" = "scm:git:@github.com:westbrook-jp/AndroidLib.git" }

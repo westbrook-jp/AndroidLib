@@ -1,6 +1,13 @@
 # AndroidLib
 Utility library for Android
 
+## ChangeLog
+- Preference:1.0.1
+  - buildtools 2.9.3, gradle-plugin 3.6.0
+  - fix attribute format
+- Preference:1.0.0
+  - initial version  
+
 
 ## License
 Copyright 2020 Westbrook

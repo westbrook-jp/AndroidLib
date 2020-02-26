@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SliderPreference">
-        <attr name="showValue" />
-        <attr name="updatesContinuously" />
-        <attr name="adjustable" />
+        <attr name="showValue" format="boolean"/>
+        <attr name="updatesContinuously" format="boolean"/>
+        <attr name="adjustable" format="boolean" />
 
-        <attr name="minimum"/>
-        <attr name="maximum"/>
-        <attr name="tick"/>
-        <attr name="format"/>
+        <attr name="minimum" format="string"/>
+        <attr name="maximum" format="string"/>
+        <attr name="tick" format="string"/>
+        <attr name="format" format="string"/>
     </declare-styleable>
 </resources>

@@ -1,6 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+ext."configVersion" = "1.0.1"
+ext."configVersionCode" = 1
+ext."mavenPomArtifactId" = "preference"
+ext."mavenPomPackaging" = "aar"
+ext."mavenPomName" = "Android Preference Library"
+ext."mavenPomDescription" = "Preference library extends the standard preference user interface"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // apply config
 File configFile = rootProject.file("config.gradle")
@@ -11,13 +19,13 @@ if (configFile.exists()) {
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion '29.0.3'
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode configVersionCode
-        versionName configVersionName
+        versionName configReleaseFlag ? configVersion : configVersion + "-SNAPSHOT"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -36,16 +44,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.preference:preference:1.1.0'
 }
 
-
-def isReleaseBuild() {
-    return configVersionName.contains("SNAPSHOT") == false
-}
 def mavenReleaseRepositoryUrl = hasProperty("mavenReleaseRepositoryUrl") ? mavenReleaseRepositoryUrl : "$buildDir/repos/releases"
 def mavenSnapshotRepositoryUrl = hasProperty("mavenSnapshotRepositoryUrl") ? mavenSnapshotRepositoryUrl : "$buildDir/repos/snapshots"
 def mavenRepositoryUsername = hasProperty("mavenRepositoryUsername") ? mavenRepositoryUsername : ""
@@ -142,7 +146,7 @@ afterEvaluate {
         }
         repositories {
             maven {
-                url = isReleaseBuild() ? mavenReleaseRepositoryUrl : mavenSnapshotRepositoryUrl
+                url = configReleaseFlag ? mavenReleaseRepositoryUrl : mavenSnapshotRepositoryUrl
 
                 if (mavenRepositoryUsername != "") {
                     credentials {
